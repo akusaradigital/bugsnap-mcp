@@ -1,7 +1,43 @@
 #!/usr/bin/env node
+import { fileURLToPath } from "node:url";
+import { resolve, dirname } from "node:path";
 import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+const CLI_ARGS = process.argv.slice(2);
+if (CLI_ARGS.includes("--config") || CLI_ARGS.includes("--setup") || CLI_ARGS.includes("-c") || CLI_ARGS.includes("--help")) {
+    const currentDir = dirname(fileURLToPath(import.meta.url));
+    const safeScriptPath = resolve(currentDir, "index.js").replace(/\\/g, "/");
+    console.log("\n=======================================================");
+    console.log("   BugSnap MCP - AI Client Safe Configurations         ");
+    console.log("=======================================================\n");
+    console.log("⭐ [RECOMMENDED] Universal Zero-Path (No backslash errors):\n");
+    console.log("1. Claude Code CLI:");
+    console.log("   claude mcp add --scope user -e BUGSNAP_API_KEY=bugsnap_xxx --transport stdio bugsnap -- npx -y github:akusaradigital/bugsnap-mcp\n");
+    console.log("2. Claude Desktop / Cursor / Windsurf JSON:");
+    console.log(JSON.stringify({
+        mcpServers: {
+            bugsnap: {
+                command: "npx",
+                args: ["-y", "github:akusaradigital/bugsnap-mcp"],
+                env: { BUGSNAP_API_KEY: "bugsnap_xxx" },
+            },
+        },
+    }, null, 2));
+    console.log("\n-------------------------------------------------------");
+    console.log("🛠️ Local Path (Auto-normalized with POSIX forward slashes):\n");
+    console.log(JSON.stringify({
+        mcpServers: {
+            bugsnap: {
+                command: "node",
+                args: [safeScriptPath],
+                env: { BUGSNAP_API_KEY: "bugsnap_xxx" },
+            },
+        },
+    }, null, 2));
+    console.log("\n*Replace 'bugsnap_xxx' with your API Key from https://bugsnap.akusaraproject.my.id/settings*\n");
+    process.exit(0);
+}
 const API_KEY = process.env.BUGSNAP_API_KEY;
 const API_BASE = (process.env.BUGSNAP_API_BASE || "https://bugsnap.akusaraproject.my.id").replace(/\/+$/, "");
 if (!API_KEY || !API_KEY.startsWith("bugsnap_")) {

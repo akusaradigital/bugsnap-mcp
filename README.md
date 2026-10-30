@@ -54,6 +54,10 @@ Once built, the server binary is located at `dist/index.js` (e.g. `D:/Akusara/EX
 
 ## ⚙️ Client Configurations
 
+> 💡 **Bebas Error Path Windows**:
+> - Gunakan **Opsi A (Universal GitHub)** di bawah ini — **100% tanpa path file** sehingga mustahil terkena error backslash Windows (`\`).
+> - Jika menggunakan instalasi lokal (Opsi B), jalankan perintah `npm run config` di dalam folder `bugsnap-mcp` untuk mencetak JSON konfigurasi yang **sudah dinormalisasi otomatis menggunakan forward slash (`/`)**.
+
 Pilih AI client yang kamu gunakan di bawah ini:
 
 ### ⚡ 1. Claude Code (CLI)

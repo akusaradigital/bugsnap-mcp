@@ -12,6 +12,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
+    "config": "npm run build && node dist/index.js --config",
     "inspect": "npm run build && npx @modelcontextprotocol/inspector node dist/index.js"
   },
   "keywords": [
