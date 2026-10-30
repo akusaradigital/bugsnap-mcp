@@ -9,13 +9,16 @@ const CLI_ARGS = process.argv.slice(2);
 if (CLI_ARGS.includes("--config") || CLI_ARGS.includes("--setup") || CLI_ARGS.includes("-c") || CLI_ARGS.includes("--help")) {
   const currentDir = dirname(fileURLToPath(import.meta.url));
   const safeScriptPath = resolve(currentDir, "index.js").replace(/\\/g, "/");
+  const safeNodePath = process.execPath.replace(/\\/g, "/");
+  const detectedKey = process.env.BUGSNAP_API_KEY || "bugsnap_xxx";
+  const hasSpaces = safeScriptPath.includes(" ");
 
   console.log("\n=======================================================");
   console.log("   BugSnap MCP - AI Client Safe Configurations         ");
   console.log("=======================================================\n");
-  console.log("⭐ [RECOMMENDED] Universal Zero-Path (No backslash errors):\n");
+  console.log("⭐ [METODE 1 - REKOMENDASI] Universal Zero-Path (Bebas Masalah Path):\n");
   console.log("1. Claude Code CLI:");
-  console.log("   claude mcp add --scope user -e BUGSNAP_API_KEY=bugsnap_xxx --transport stdio bugsnap -- npx -y github:akusaradigital/bugsnap-mcp\n");
+  console.log(`   claude mcp add --scope user -e BUGSNAP_API_KEY=${detectedKey} --transport stdio bugsnap -- npx -y github:akusaradigital/bugsnap-mcp\n`);
   console.log("2. Claude Desktop / Cursor / Windsurf JSON:");
   console.log(
     JSON.stringify(
@@ -24,7 +27,7 @@ if (CLI_ARGS.includes("--config") || CLI_ARGS.includes("--setup") || CLI_ARGS.in
           bugsnap: {
             command: "npx",
             args: ["-y", "github:akusaradigital/bugsnap-mcp"],
-            env: { BUGSNAP_API_KEY: "bugsnap_xxx" },
+            env: { BUGSNAP_API_KEY: detectedKey },
           },
         },
       },
@@ -32,8 +35,9 @@ if (CLI_ARGS.includes("--config") || CLI_ARGS.includes("--setup") || CLI_ARGS.in
       2
     )
   );
+
   console.log("\n-------------------------------------------------------");
-  console.log("🛠️ Local Path (Auto-normalized with POSIX forward slashes):\n");
+  console.log("🛠️ [METODE 2] Local Path (Path forward slash otomatis):\n");
   console.log(
     JSON.stringify(
       {
@@ -41,7 +45,7 @@ if (CLI_ARGS.includes("--config") || CLI_ARGS.includes("--setup") || CLI_ARGS.in
           bugsnap: {
             command: "node",
             args: [safeScriptPath],
-            env: { BUGSNAP_API_KEY: "bugsnap_xxx" },
+            env: { BUGSNAP_API_KEY: detectedKey },
           },
         },
       },
@@ -49,7 +53,19 @@ if (CLI_ARGS.includes("--config") || CLI_ARGS.includes("--setup") || CLI_ARGS.in
       2
     )
   );
-  console.log("\n*Replace 'bugsnap_xxx' with your API Key from https://bugsnap.akusaraproject.my.id/settings*\n");
+
+  console.log("\n💡 [FALLBACK] Jika Claude Desktop error 'spawn node ENOENT' (Node tak terdeteksi di GUI PATH):");
+  console.log(`   Ubah "command": "node" menjadi path absolut: "${safeNodePath}"\n`);
+
+  if (hasSpaces) {
+    console.log("⚠️ PERHATIAN PATH BERSPASI:");
+    console.log(`   Folder proyek mengandung spasi ('${safeScriptPath}').`);
+    console.log("   Jika menggunakan terminal CLI (bukan JSON), pastikan path dibungkus tanda kutip ganda.\n");
+  }
+
+  if (!process.env.BUGSNAP_API_KEY) {
+    console.log("*Ganti 'bugsnap_xxx' dengan API Key kamu dari https://bugsnap.akusaraproject.my.id/settings*\n");
+  }
   process.exit(0);
 }
 
