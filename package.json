@@ -1,0 +1,52 @@
+{
+  "name": "bugsnap-mcp",
+  "version": "0.3.0",
+  "description": "Official MCP server for BugSnap - gives AI coding agents (Claude Code, Claude Desktop, Cursor) multimodal access, native resources, prompts, and actionable fix blueprints for bug reports.",
+  "type": "module",
+  "bin": {
+    "bugsnap-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "inspect": "npm run build && npx @modelcontextprotocol/inspector node dist/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "bugsnap",
+    "bug-tracking",
+    "devtools",
+    "telemetry",
+    "claude",
+    "cursor",
+    "ai-agent",
+    "qa",
+    "screenshots"
+  ],
+  "author": "BugSnap",
+  "license": "MIT",
+  "homepage": "https://bugsnap.akusaraproject.my.id/docs/mcp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akusaradigital/bugsnap-mcp.git"
+  },
+  "bugs": {
+    "url": "https://bugsnap.akusaraproject.my.id/contact"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@types/node": "^22.10.5"
+  }
+}
