@@ -58,18 +58,16 @@ Pilih AI client yang kamu gunakan di bawah ini:
 
 ### ⚡ 1. Claude Code (CLI)
 
-#### Opsi A: Menggunakan Path Lokal (Rekomendasi)
-Jalankan perintah ini di terminal (sesuaikan path absolut ke folder `bugsnap-mcp` kamu):
+#### Opsi A: 1-Baris Langsung dari GitHub (Tanpa Perlu Clone)
+```bash
+claude mcp add --scope user -e BUGSNAP_API_KEY=bugsnap_xxx --transport stdio bugsnap -- npx -y github:akusaradigital/bugsnap-mcp
+```
 
+#### Opsi B: Menggunakan Path Lokal (Offline / Clone Sendiri)
 ```bash
 claude mcp add --scope user -e BUGSNAP_API_KEY=bugsnap_xxx --transport stdio bugsnap -- node "D:/Akusara/EXTENTION CHROME/bugsnap-mcp/dist/index.js"
 ```
 *(Untuk macOS/Linux, gunakan path Unix seperti `/Users/username/bugsnap-mcp/dist/index.js`).*
-
-#### Opsi B: Jika sudah `npm link`
-```bash
-claude mcp add --scope user -e BUGSNAP_API_KEY=bugsnap_xxx --transport stdio bugsnap -- bugsnap-mcp
-```
 
 ---
 
@@ -79,8 +77,22 @@ Buka file konfigurasi `claude_desktop_config.json`:
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
-Tambahkan server `bugsnap`:
+#### Opsi A: Langsung via GitHub
+```json
+{
+  "mcpServers": {
+    "bugsnap": {
+      "command": "npx",
+      "args": ["-y", "github:akusaradigital/bugsnap-mcp"],
+      "env": {
+        "BUGSNAP_API_KEY": "bugsnap_xxx"
+      }
+    }
+  }
+}
+```
 
+#### Opsi B: Menggunakan Path Lokal
 ```json
 {
   "mcpServers": {
@@ -100,18 +112,22 @@ Tambahkan server `bugsnap`:
 
 ### 🖱️ 3. Cursor IDE
 
-Tambahkan ke `.cursor/mcp.json` di root workspace proyek kamu (atau di Settings → MCP):
+Tambahkan ke `.cursor/mcp.json` di root workspace proyek kamu (atau di Cursor Settings → Features → MCP):
 
 ```json
 {
   "mcpServers": {
     "bugsnap": {
-      "command": "node",
-      "args": ["D:/Akusara/EXTENTION CHROME/bugsnap-mcp/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "github:akusaradigital/bugsnap-mcp"],
       "env": {
         "BUGSNAP_API_KEY": "bugsnap_xxx"
       }
     }
+  }
+}
+```
+*(Atau gunakan `"command": "node"` dan `"args": ["D:/Akusara/EXTENTION CHROME/bugsnap-mcp/dist/index.js"]` jika menggunakan instalasi lokal).*
   }
 }
 ```
