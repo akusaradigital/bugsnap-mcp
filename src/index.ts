@@ -124,6 +124,9 @@ interface CaptureDetail {
   user_steps: string[];
   ai_summary: string | null;
   comments?: CommentItem[];
+  playwright_test?: string | null;
+  github_action_workflow?: string | null;
+  ai_fix_prompt?: string | null;
 }
 
 async function apiFetch<T>(path: string): Promise<T> {
@@ -342,6 +345,24 @@ function formatCaptureDetailReport(cap: CaptureDetail): { markdown: string; isVi
   );
 
   sections.push(fixSteps.join("\n"));
+
+  // 12. Synthesized Playwright Regression Test
+  if (cap.playwright_test) {
+    sections.push(
+      `\n## 🎭 Synthesized Playwright Regression Test`,
+      `BugSnap automatically generated a runnable @playwright/test to reproduce and prevent regression:`,
+      `\`\`\`typescript\n${cap.playwright_test}\n\`\`\``
+    );
+  }
+
+  // 13. GitHub Action Quality Gate Workflow
+  if (cap.github_action_workflow) {
+    sections.push(
+      `\n## 🚀 GitHub Action Quality Gate Workflow`,
+      `To enforce automated verification on every Pull Request, save this to \`.github/workflows/bugsnap-quality-gate.yml\`:`,
+      `\`\`\`yaml\n${cap.github_action_workflow}\n\`\`\``
+    );
+  }
 
   return {
     markdown: sections.filter((s) => s !== "").join("\n"),

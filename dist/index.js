@@ -197,6 +197,14 @@ function formatCaptureDetailReport(cap) {
     }
     fixSteps.push(`3. **Check Edge Cases**: Check for missing null/undefined guards, unhandled empty arrays, race conditions, or CSS viewport overflow.`, `4. **Verify Fix**: Ensure your code change addresses the root cause directly without regressing adjacent workflows.`);
     sections.push(fixSteps.join("\n"));
+    // 12. Synthesized Playwright Regression Test
+    if (cap.playwright_test) {
+        sections.push(`\n## 🎭 Synthesized Playwright Regression Test`, `BugSnap automatically generated a runnable @playwright/test to reproduce and prevent regression:`, `\`\`\`typescript\n${cap.playwright_test}\n\`\`\``);
+    }
+    // 13. GitHub Action Quality Gate Workflow
+    if (cap.github_action_workflow) {
+        sections.push(`\n## 🚀 GitHub Action Quality Gate Workflow`, `To enforce automated verification on every Pull Request, save this to \`.github/workflows/bugsnap-quality-gate.yml\`:`, `\`\`\`yaml\n${cap.github_action_workflow}\n\`\`\``);
+    }
     return {
         markdown: sections.filter((s) => s !== "").join("\n"),
         isVideo,
