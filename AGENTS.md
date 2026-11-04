@@ -5,9 +5,10 @@
 1. **Repository**: Standalone GitHub repository `akusaradigital/bugsnap-mcp` (stdio transport).
 2. **Build Gate**: `npm run build` (`tsc`) must exit with code 0.
 3. **Push Policy**: When the user instructs `git push` to `main`, `bugsnap-mcp` is pushed together with `bugsnap-dashboard` and `bugsnap-extension` to `origin main`. Run `npm run build` (`tsc`) so `dist/` is compiled and tracked before pushing.
-4. **Auth & Security**: Read-scoped user API key only (`BUGSNAP_API_KEY`). Never hardcode or bundle private credentials.
-5. **Tool Surface**: Read-only tools (`bugsnap_list_captures`, `bugsnap_get_capture`), resources (`bugsnap://...`), and prompts.
-6. **Graphify MANDATORY**: Read `../graphify-out/GRAPH_REPORT.md` before exploring code. Always use latest graph data; old snapshots in `../graphify-out/<old-date>/` are purged on update.
+4. **Changelog Generation on Release (MANDATORY on git push to main)**: Whenever the user explicitly instructs `git push` to `main`, ALWAYS generate and update release entries in `CHANGELOG.md` across all 3 projects (`[bugsnap-dashboard]`, `[bugsnap-extension]`, `[bugsnap-mcp]`) documenting changes with date (`### YYYY-MM-DD (vX.Y.Z)`) and tags (`feat`, `fix`, `perf`, `docs`, `chore`). This feeds the Super Admin Changelog viewer.
+5. **Auth & Security**: Read-scoped user API key only (`BUGSNAP_API_KEY`). Never hardcode or bundle private credentials.
+6. **Tool Surface**: Read-only tools (`bugsnap_list_captures`, `bugsnap_get_capture`), resources (`bugsnap://...`), and prompts.
+7. **Graphify MANDATORY**: Read `../graphify-out/GRAPH_REPORT.md` before exploring code. Always use latest graph data; old snapshots in `../graphify-out/<old-date>/` are purged on update.
 
 ## Brand Asset & Visual Identity Enforcement
 

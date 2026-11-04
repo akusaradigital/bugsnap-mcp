@@ -6,6 +6,7 @@
 
 - **Repository**: Standalone GitHub repository at `https://github.com/akusaradigital/bugsnap-mcp` (`@modelcontextprotocol/sdk`, stdio transport).
 - **Push Policy**: Push only when the user explicitly instructs `git push`. When the user instructs `git push` to `main` (or "push ke main"), `bugsnap-mcp` is pushed together with `bugsnap-dashboard` and `bugsnap-extension` to `origin main`. Run `npm run build` (`tsc`) so `dist/` is compiled and tracked before pushing.
+- **Changelog Generation on Release (MANDATORY on git push to main)**: Whenever the user explicitly instructs `git push` to `main`, ALWAYS generate and update release entries in `CHANGELOG.md` across all 3 projects (`[bugsnap-dashboard]`, `[bugsnap-extension]`, `[bugsnap-mcp]`) documenting changes with date (`### YYYY-MM-DD (vX.Y.Z)`) and tags (`feat`, `fix`, `perf`, `docs`, `chore`). This feeds the Super Admin Changelog viewer.
 - **Build Gate**: `npm run build` (`tsc`) must exit 0 before considering any change done.
 - **Auth**: Server is a thin client against the BugSnap API (`https://bugsnap.akusaraproject.my.id`) using a read-scoped user API key (`BUGSNAP_API_KEY=bugsnap_...`). Never use service role keys or bundle secrets.
 - **Tool Surface**: Expose only read/query tools (`bugsnap_list_captures`, `bugsnap_get_capture`), resources (`bugsnap://...`), and prompts (`bugsnap_fix_bug`, `bugsnap_triage_open_bugs`). Never add tools that delete, mutate workspace state, or touch billing.
