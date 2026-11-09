@@ -9,6 +9,9 @@
 5. **Auth & Security**: Read-scoped user API key only (`BUGSNAP_API_KEY`). Never hardcode or bundle private credentials.
 6. **Tool Surface**: Read-only tools (`bugsnap_list_captures`, `bugsnap_get_capture`), resources (`bugsnap://...`), and prompts.
 7. **Graphify MANDATORY**: Read `../graphify-out/GRAPH_REPORT.md` before exploring code. Always use latest graph data; old snapshots in `../graphify-out/<old-date>/` are purged on update.
+8. **Focused validation**: For a source change, run `npm run build` and the smallest relevant tool/resource/prompt checks first. Use the complete MCP validation for release/commit validation or explicit full validation.
+9. **Subagent-per-module**: Delegate only the affected MCP tool, resource, prompt, or API client module and provide the relevant Graphify call map first.
+10. **Read-only boundary**: Keep the server limited to read/query tools, resources, and prompts. Never add delete, mutation, billing, or credential-management tools.
 
 ## Brand Asset & Visual Identity Enforcement
 

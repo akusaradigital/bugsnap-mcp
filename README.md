@@ -17,7 +17,17 @@ Gives AI coding agents (**Claude Code**, **Claude Desktop**, **Cursor**, **Winds
 - 🎯 **Actionable AI Fix Blueprint** (a structured diagnostic plan preventing coding agents from guessing or modifying the wrong component).
 - ⚠️ **Smart Ambiguity Guardrail** (if a bug report has no written description and no visual markings, the agent pauses and asks the user directly instead of guessing).
 
-Runs 100% locally over `stdio`. No server hosting required.
+Runs 100% locally over `stdio`. No server hosting required. The server exposes read/query tools, resources, and guided prompts only; it does not mutate captures, workspaces, or billing.
+
+## Validation
+
+For routine changes, run the smallest relevant checks first:
+
+```bash
+npm run build
+```
+
+Use complete validation for release/commit work or when explicitly requested. Never place API keys, service-role credentials, or authentication artifacts in the repository.
 
 ---
 
@@ -25,7 +35,7 @@ Runs 100% locally over `stdio`. No server hosting required.
 
 ### 1. Get Your BugSnap API Key
 1. Open the [BugSnap Dashboard](https://bugsnap.akusaraproject.my.id).
-2. Go to **Settings → BugSnap API Keys**.
+2. Go to **Settings  BugSnap API Keys**.
 3. Click **Generate API Key** and copy your key (starts with `bugsnap_...`).
 
 ---
@@ -116,7 +126,7 @@ Buka file konfigurasi `claude_desktop_config.json`:
 
 ### 🖱️ 3. Cursor IDE
 
-Tambahkan ke `.cursor/mcp.json` di root workspace proyek kamu (atau di Cursor Settings → Features → MCP):
+Tambahkan ke `.cursor/mcp.json` di root workspace proyek kamu (atau di Cursor Settings  Features  MCP):
 
 ```json
 {

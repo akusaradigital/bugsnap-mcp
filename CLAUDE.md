@@ -12,6 +12,9 @@
 - **Tool Surface**: Expose only read/query tools (`bugsnap_list_captures`, `bugsnap_get_capture`), resources (`bugsnap://...`), and prompts (`bugsnap_fix_bug`, `bugsnap_triage_open_bugs`). Never add tools that delete, mutate workspace state, or touch billing.
 - **Graphify MANDATORY**: Read `../graphify-out/GRAPH_REPORT.md` before exploring code. Use latest graph data only (`graphify-out/graph.json` or latest date snapshot); all old historical snapshots in `../graphify-out/<old-date>/` are purged on update.
 - **No dependencies bloat**: Keep dependencies minimal (`@modelcontextprotocol/sdk`, `zod`).
+- **Focused validation**: Run `npm run build` and the smallest relevant tool/resource/prompt checks for routine changes. Use complete validation for release/commit work or when explicitly requested.
+- **Subagent-per-module**: Delegate only the affected MCP tool, resource, prompt, or API client module and provide the relevant Graphify call map first.
+- **Read-only boundary**: Keep the server limited to read/query tools, resources, and prompts. Never add delete, mutation, billing, or credential-management tools.
 
 ## 2. Brand Asset & Visual Identity Enforcement
 
