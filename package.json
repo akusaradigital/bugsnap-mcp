@@ -13,7 +13,8 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "config": "npm run build && node dist/index.js --config",
-    "inspect": "npm run build && npx @modelcontextprotocol/inspector node dist/index.js"
+    "inspect": "npm run build && npx @modelcontextprotocol/inspector node dist/index.js",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "keywords": [
     "mcp",
