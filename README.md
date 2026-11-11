@@ -65,7 +65,7 @@ Once built, the server binary is located at `dist/index.js` (e.g. `D:/Akusara/EX
 ## ⚙️ Client Configurations
 
 > 💡 **Bebas Error Path Windows**:
-> - Gunakan **Opsi A (Universal GitHub)** di bawah ini — **100% tanpa path file** sehingga mustahil terkena error backslash Windows (`\`).
+> - Gunakan **Opsi A (Universal GitHub)** di bawah ini -**100% tanpa path file** sehingga mustahil terkena error backslash Windows (`\`).
 > - Jika menggunakan instalasi lokal (Opsi B), jalankan perintah `npm run config` di dalam folder `bugsnap-mcp` untuk mencetak JSON konfigurasi yang **sudah dinormalisasi otomatis menggunakan forward slash (`/`)**.
 
 Pilih AI client yang kamu gunakan di bawah ini:
@@ -266,7 +266,7 @@ Model LLM saat ini tidak dapat memutar/menonton video mentah. Jika capture berup
 
 | Variabel | Wajib | Default | Deskripsi |
 |---|---|---|---|
-| `BUGSNAP_API_KEY` | **Ya** | — | API key workspace dari BugSnap Settings (`bugsnap_...`). |
+| `BUGSNAP_API_KEY` | **Ya** | -| API key workspace dari BugSnap Settings (`bugsnap_...`). |
 | `BUGSNAP_API_BASE` | Tidak | `https://bugsnap.akusaraproject.my.id` | Base URL instance BugSnap. |
 
 ---
