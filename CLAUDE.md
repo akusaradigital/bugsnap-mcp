@@ -11,3 +11,9 @@
 - **Tool surface**: read/query only - `bugsnap_list_captures`, `bugsnap_get_capture`, `bugsnap://...` resources, `bugsnap_fix_bug`/`bugsnap_triage_open_bugs` prompts. Never add delete, mutation, billing, or credential-management tools.
 - **No dependency bloat**: keep dependencies minimal (`@modelcontextprotocol/sdk`, `zod`).
 - **Focused validation**: `npm run build` + the smallest relevant tool/resource/prompt check for routine changes; full validation for release/commit work.
+
+## Versioning
+
+- **Every code change bumps the version** (see `../CLAUDE.md` §2). Bump `package.json` (and `package-lock.json`) before the change is committed. Current: **`0.3.2`**.
+- SemVer: PATCH for fixes/docs-with-code, MINOR for new read tools/resources, MAJOR for breaking changes. Read-only tool surface still applies (`../CLAUDE.md` §9).
+- Every bump needs a matching changelog entry in root `CHANGELOG.md`.
