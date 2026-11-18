@@ -12,8 +12,8 @@
 - **No dependency bloat**: keep dependencies minimal (`@modelcontextprotocol/sdk`, `zod`).
 - **Focused validation**: `npm run build` + the smallest relevant tool/resource/prompt check for routine changes; full validation for release/commit work.
 
-## Versioning
+## Versioning & Production Releases
 
-- **Every code change bumps the version** (see `../CLAUDE.md` §2). Bump `package.json` (and `package-lock.json`) before the change is committed. Current: **`0.3.2`**.
+- **Bump version only for production releases** (see `../CLAUDE.md` §2). Version bumps are NOT performed on routine code changes. Bumping `package.json` (and `package-lock.json`) is done when preparing a production release. Current: **`0.3.2`**.
 - SemVer: PATCH for fixes/docs-with-code, MINOR for new read tools/resources, MAJOR for breaking changes. Read-only tool surface still applies (`../CLAUDE.md` §9).
-- Every bump needs a matching changelog entry in root `CHANGELOG.md`.
+- **Changelog updated only for production releases**: Changelog entries in root `CHANGELOG.md` are added ONLY when preparing a production release, summarizing changes since the previous release (not created on every routine change).
