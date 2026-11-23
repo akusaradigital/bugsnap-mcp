@@ -129,9 +129,14 @@ interface CaptureDetail {
   ai_fix_prompt?: string | null;
 }
 
-async function apiFetch<T>(path: string): Promise<T> {
+async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: { Authorization: `Bearer ${API_KEY}` },
+    ...options,
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      ...(options?.body ? { "Content-Type": "application/json" } : {}),
+      ...(options?.headers || {}),
+    },
   });
   const json = await res.json().catch(() => null);
   if (!res.ok) {
@@ -476,6 +481,42 @@ server.registerTool(
       return { content };
     } catch (err) {
       return errorResult(err instanceof Error ? err.message : "Failed to fetch BugSnap capture");
+    }
+  }
+);
+
+server.registerTool(
+  "bugsnap_update_capture_status",
+  {
+    title: "Update BugSnap capture triage status and post resolution comment",
+    description:
+      "Update a BugSnap bug report's status (open, in-progress, fixed, closed) and optionally record a resolution explanation or git commit reference. Use this after diagnosing or fixing a bug so the QA team and workspace members are automatically notified that the issue has been resolved.",
+    inputSchema: {
+      id: z.string().describe("Capture ID (UUID) or full BugSnap share URL, e.g. https://bugsnap.akusaraproject.my.id/v/<id>"),
+      status: z.enum(STATUS_VALUES).describe("New triage status for the capture: 'open', 'in-progress', 'fixed', or 'closed'."),
+      comment: z.string().optional().describe("Optional resolution explanation or git commit hash, e.g. 'Resolved in commit 3df820c: added null check in cart handler'."),
+    },
+  },
+  async ({ id, status, comment }) => {
+    try {
+      const captureId = extractCaptureId(id);
+      const res = await apiFetch<{ success: boolean; id: string; status: string; comment?: string | null; message: string }>(
+        `/api/public/v1/captures/${encodeURIComponent(captureId)}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ status, comment, author: "BugSnap AI Agent" }),
+        }
+      );
+      return {
+        content: [
+          {
+            type: "text",
+            text: `✅ **BugSnap capture ${res.id} updated successfully**:\n- **Status**: \`${res.status}\`${res.comment ? `\n- **Resolution Comment**: "${res.comment}"` : ""}\n- **Capture URL**: ${API_BASE}/v/${res.id}`,
+          },
+        ],
+      };
+    } catch (err) {
+      return errorResult(err instanceof Error ? err.message : "Failed to update BugSnap capture status");
     }
   }
 );
