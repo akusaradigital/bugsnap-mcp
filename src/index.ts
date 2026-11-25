@@ -159,7 +159,7 @@ function errorResult(message: string) {
   return { isError: true as const, content: [{ type: "text" as const, text: message }] };
 }
 
-const server = new McpServer({ name: "bugsnap", version: "0.3.0" });
+const server = new McpServer({ name: "bugsnap", version: "0.3.6" });
 
 function formatCaptureDetailReport(cap: CaptureDetail): { markdown: string; isVideo: boolean } {
   const sections: string[] = [];

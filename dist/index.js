@@ -84,7 +84,7 @@ function extractCaptureId(input) {
 function errorResult(message) {
     return { isError: true, content: [{ type: "text", text: message }] };
 }
-const server = new McpServer({ name: "bugsnap", version: "0.3.0" });
+const server = new McpServer({ name: "bugsnap", version: "0.3.6" });
 function formatCaptureDetailReport(cap) {
     const sections = [];
     const isVideo = cap.type === "video" || (!cap.screenshot_url && Boolean(cap.video_url));
