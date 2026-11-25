@@ -200,7 +200,10 @@ function formatCaptureDetailReport(cap) {
             fixSteps.push(`2. **Locate Target Component**: Search your codebase for UI strings or element identifiers visible in the attached screenshot.`);
         }
     }
-    fixSteps.push(`3. **Check Edge Cases**: Check for missing null/undefined guards, unhandled empty arrays, race conditions, or CSS viewport overflow.`, `4. **Verify Fix**: Ensure your code change addresses the root cause directly without regressing adjacent workflows.`);
+    fixSteps.push(`3. **Check Edge Cases**: Check for missing null/undefined guards, unhandled empty arrays, race conditions, or CSS viewport overflow.`, `4. **Auto-Reproduce & Verify Fix Loop**:` +
+        (cap.playwright_test
+            ? ` Save or adapt the Synthesized Playwright Regression Test below (or add a targeted unit/integration test), run it to confirm reproduction/green pass after your edit, and run the repo's typecheck/test gate before finishing.`
+            : ` Add or run a targeted reproduction test, apply the minimal root-cause fix, and re-run the test + repo verification gate to confirm zero regressions.`));
     sections.push(fixSteps.join("\n"));
     // 12. Synthesized Playwright Regression Test
     if (cap.playwright_test) {
@@ -451,7 +454,7 @@ server.registerPrompt("bugsnap_fix_bug", {
                         `   - If the report is a video recording, strictly adhere to the video guardrail: do NOT guess visual layout; diagnose from network/console/step telemetry.\n` +
                         `3. Search the local repository for matching API routes, error messages from stack traces, or relevant UI components.\n` +
                         `4. Implement the minimal correct fix for the root cause without regressions.\n` +
-                        `5. Run the repository's test or typecheck gate to verify that the fix is clean and working.`,
+                        `5. **Auto-Verify Fix**: Run the synthesized \`@playwright/test\` reproduction test from \`bugsnap_get_capture\` (or write a targeted test if none is attached) alongside the repository's test/typecheck gate to prove the bug is fixed and nothing regressed.`,
                 },
             },
         ],
